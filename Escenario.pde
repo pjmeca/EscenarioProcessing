@@ -1,8 +1,12 @@
 Starfield starfield;
+Tierra tierra;
+
 
 void setup() {
   size(1920, 1080);
+  frameRate(60);
   starfield = new Starfield();
+  tierra = new Tierra("tierra.jpg", 20, 20, 250, 260, 1);  
 }
 
 void draw() {
@@ -10,5 +14,8 @@ void draw() {
   background(0);
 
   // Dibujar estrellas aleatorias en el fondo
-  starfield.drawStars();
+  starfield.draw();
+
+  // Dibujar la esfera de la Tierra giratoria
+  tierra.draw();
 }

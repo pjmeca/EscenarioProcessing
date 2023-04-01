@@ -13,7 +13,7 @@ class Starfield {
     }
   }
 
-  void drawStars() {
+  void draw() {
     // Dibujar las numEstrellas estrellas en el fondo
     for(Estrella e : estrellas) {
       // Dibujar la estrella como un círculo blanco
