@@ -10,7 +10,7 @@ class Tierra {
     private static final int DEFAULT_SPEEDCOUNTER = 2;
     private int speedCounter = DEFAULT_SPEEDCOUNTER;
 
-    private PGraphics earthGraphic;
+    private PGraphics tierra;
 
     Tierra(String texturaURL, int x, int y, int height, int width, int velocidad) {
         textura = loadImage(texturaURL);
@@ -50,24 +50,40 @@ class Tierra {
 
     // Dibuja la Tierra
     private void dibujar() {
+        // Primero dibujamos un fondo negro para que no se vean las estrellas detrás al difuminar la Tierra
+        fill(0);
+        ellipse(x+width/2, y+height/2, width, height);
+
         // Crear un objeto PGraphics para la textura de la Tierra
-        earthGraphic = createGraphics(width, height);
-        earthGraphic.beginDraw();
-        earthGraphic.image(textura, 0, 0, textura.width * height/textura.height, height);
-        earthGraphic.endDraw();
+        tierra = createGraphics(width, height);
+        tierra.beginDraw();
+        tierra.image(textura, 0, 0, textura.width * height/textura.height, height);
+        tierra.endDraw();
 
         // Dibujar una elipse como máscara para la textura de la Tierra
-        PGraphics mask = createGraphics(width, height);
-        mask.beginDraw();
-        mask.noStroke();
-        mask.fill(255);
-        mask.ellipse(width/2, height/2, width, height);
-        mask.endDraw();
+        PGraphics mascara = createGraphics(width, height);
+        mascara.beginDraw();
+        mascara.endDraw();
+
+        // Aplicar gradiente de color a la máscara
+        float radioOpacidad = 10; // distancia desde el centro de la elipse hasta donde comienza la transparencia
+        float exponente = 5; // exponentee para la función exponencial
+
+        for (int y = 0; y < mascara.height; y++) {
+            for (int x = 0; x < mascara.width; x++) {
+                float d = dist(x, y, mascara.width/2, mascara.height/2)+5; // Distancia al centro de la elipse (+5 para ajustar la elipse dentro del rectángulo)
+                float t = pow(max(0, (d - radioOpacidad)) / (mascara.width/2 - radioOpacidad), exponente); // Mappear la distancia utilizando la función exponencial
+                color c = lerpColor(color(0, 0, 255), color(0, 255, 0), t); // Gradiente entre azul y verde
+                mascara.pixels[x + y * mascara.width] = c; // Asignar el color a cada píxel de la máscara
+            }
+        }
+
+        mascara.updatePixels();
 
         // Aplicar la máscara a la textura de la Tierra
-        earthGraphic.mask(mask);
+        tierra.mask(mascara);
 
         // Dibujar la textura de la Tierra en la ventana principal
-        image(earthGraphic, x, y, width, height);
+        image(tierra, x, y, width, height);
     }
 }

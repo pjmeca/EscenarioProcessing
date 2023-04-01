@@ -6,7 +6,7 @@ void setup() {
   size(1920, 1080);
   frameRate(60);
   starfield = new Starfield();
-  tierra = new Tierra("tierra.jpg", 20, 20, 250, 260, 1);  
+  tierra = new Tierra("tierra.jpg", 20, 20, 300, 310, 1);  
 }
 
 void draw() {
