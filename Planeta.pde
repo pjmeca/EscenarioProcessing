@@ -2,7 +2,7 @@ abstract class Planeta {
     
     PImage textura; // Imagen de la textura del planeta
     int x, y;
-    int height, width;
+    int diametro;
     int velocidad;
     
     // Como rota muy rápido incluso a 1 de velocidad,
@@ -12,14 +12,13 @@ abstract class Planeta {
 
     private PGraphics planeta;
 
-    Planeta(String texturaURL, int x, int y, int height, int width, int velocidad) {
+    Planeta(String texturaURL, int x, int y, int diametro, int velocidad) {
         textura = loadImage(texturaURL);
         // imageMode(CENTER); // coloca el punto x, y en el centro del planeta
 
         this.x = x;
         this.y = y;
-        this.height = height;
-        this.width = width;
+        this.diametro = diametro;
         this.velocidad = velocidad;
     }
 
@@ -52,26 +51,26 @@ abstract class Planeta {
     private void dibujar() {
         // Primero dibujamos un fondo negro para que no se vean las estrellas detrás al difuminar el planeta
         fill(0);
-        ellipse(x+width/2, y+height/2, width, height);
+        ellipse(x+diametro/2, y+diametro/2, diametro, diametro);
 
         // Crear un objeto PGraphics para la textura del planeta
-        planeta = createGraphics(width, height);
+        planeta = createGraphics(diametro, diametro);
         planeta.beginDraw();
-        planeta.image(textura, 0, 0, textura.width * height/textura.height, height);
+        planeta.image(textura, 0, 0, textura.width * diametro/textura.height, diametro);
         planeta.endDraw();
 
         // Dibujar una elipse como máscara para la textura del planeta
-        PGraphics mascara = createGraphics(width, height);
+        PGraphics mascara = createGraphics(diametro, diametro);
         mascara.beginDraw();
         mascara.endDraw();
 
         // Aplicar gradiente de color a la máscara
         float radioOpacidad = 10; // distancia desde el centro de la elipse hasta donde comienza la transparencia
-        float exponente = 5; // exponentee para la función exponencial
+        float exponente = 5; // exponente para la función exponencial
 
         for (int y = 0; y < mascara.height; y++) {
             for (int x = 0; x < mascara.width; x++) {
-                float d = dist(x, y, mascara.width/2, mascara.height/2)+5; // Distancia al centro de la elipse (+5 para ajustar la elipse dentro del rectángulo)
+                float d = dist(x, y, mascara.width/2, mascara.height/2); // Distancia al centro de la elipse
                 float t = pow(max(0, (d - radioOpacidad)) / (mascara.width/2 - radioOpacidad), exponente); // Mappear la distancia utilizando la función exponencial
                 color c = lerpColor(color(0, 0, 255), color(0, 255, 0), t); // Gradiente entre azul y verde
                 mascara.pixels[x + y * mascara.width] = c; // Asignar el color a cada píxel de la máscara
@@ -87,22 +86,22 @@ abstract class Planeta {
         tmp.mask(mascara);
 
         // Dibujar la textura de la planeta en la ventana principal
-        image(tmp, x, y, width, height);
+        image(tmp, x, y, diametro, diametro);
     }
 
     private PImage distorsionar(PGraphics img) {
 
-        int cx = x+width/2; // Coordenada x del centro de la zona de distorsión
-        int cy = y+height/2; // Coordenada y del centro de la zona de distorsión
-        int radio = max(height, width)/20 * 11; // Radio de la zona de distorsión (cogemos 11/20 partes para que el radio sobresalga un poco de la máscara)
+        int cx = x+diametro/2; // Coordenada x del centro de la zona de distorsión
+        int cy = y+diametro/2; // Coordenada y del centro de la zona de distorsión
+        int radio = max(diametro, diametro)/20 * 11; // Radio de la zona de distorsión (cogemos 11/20 partes para que el radio sobresalga un poco de la máscara)
         float distorsion = 0.65; // Factor de distorsión de ojo de pez (<1 aumenta y >1 reduce)
 
         // Crear una imagen temporal para almacenar la imagen distorsionada
-        PImage temp = createImage(width, height, RGB);
+        PImage temp = createImage(diametro, diametro, RGB);
 
         // Iterar por cada píxel de la imagen
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+        for (int x = 0; x < diametro; x++) {
+            for (int y = 0; y < diametro; y++) {
                 // Calcular la distancia del píxel al centro de la zona de distorsión
                 float dx = x - cx;
                 float dy = y - cy;
@@ -134,8 +133,8 @@ class Tierra extends Planeta {
     
     public static final String textura = "resources/tierra.jpg";
 
-    Tierra(int x, int y, int height, int width, int velocidad){
-        super(textura, x, y, height, width, velocidad);
+    Tierra(int x, int y, int diametro, int velocidad){
+        super(textura, x, y, diametro, velocidad);
     }
 }
 
@@ -143,7 +142,7 @@ class Luna extends Planeta {
     
     public static final String textura = "resources/luna.jpg";
 
-    Luna(int x, int y, int height, int width, int velocidad){
-        super(textura, x, y, height, width, velocidad);
+    Luna(int x, int y, int diametro, int velocidad){
+        super(textura, x, y, diametro, velocidad);
     }
 }
