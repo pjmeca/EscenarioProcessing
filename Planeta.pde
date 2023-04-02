@@ -4,6 +4,7 @@ abstract class Planeta {
     int x, y;
     int diametro;
     int velocidad;
+    int anguloRotacion = 0;
     
     // Como rota muy rápido incluso a 1 de velocidad,
     // reduciremos la cantidad de veces que se ejecuta la rotación (equivale a saltar frames)
@@ -12,7 +13,7 @@ abstract class Planeta {
 
     private PGraphics planeta;
 
-    Planeta(String texturaURL, int x, int y, int diametro, int velocidad) {
+    Planeta(String texturaURL, int x, int y, int diametro, int velocidad, int angulo) {
         textura = loadImage(texturaURL);
         // imageMode(CENTER); // coloca el punto x, y en el centro del planeta
 
@@ -20,6 +21,7 @@ abstract class Planeta {
         this.y = y;
         this.diametro = diametro;
         this.velocidad = velocidad;
+        this.anguloRotacion = angulo;
     }
 
     void draw() {
@@ -49,6 +51,13 @@ abstract class Planeta {
 
     // Dibuja el planeta
     private void dibujar() {
+        pushMatrix();
+
+        // Aplicamos la rotación
+        translate(x + diametro/2, y + diametro/2);
+        rotate(radians(anguloRotacion));
+        translate(-(x + diametro/2), -(y + diametro/2));
+
         // Primero dibujamos un fondo negro para que no se vean las estrellas detrás al difuminar el planeta
         fill(0);
         ellipse(x+diametro/2, y+diametro/2, diametro, diametro);
@@ -85,8 +94,10 @@ abstract class Planeta {
         // Aplicar la máscara a la textura de la planeta
         tmp.mask(mascara);
 
-        // Dibujar la textura de la planeta en la ventana principal
+        // Dibujar la textura del planeta en la ventana principal
         image(tmp, x, y, diametro, diametro);
+
+        popMatrix();
     }
 
     private PImage distorsionar(PGraphics img) {
@@ -131,10 +142,20 @@ abstract class Planeta {
 
 class Tierra extends Planeta {
     
-    public static final String textura = "resources/tierra.jpg";
+    public static final String textura = "resources/tierra.png";
 
-    Tierra(int x, int y, int diametro, int velocidad){
-        super(textura, x, y, diametro, velocidad);
+    private Luna luna;
+
+    Tierra(int x, int y, int diametro, int velocidad, int angulo){
+        super(textura, x, y, diametro, velocidad, angulo);
+
+        luna = new Luna(x+444, y+100, int(diametro*0.27), 1, angulo);  
+    }
+
+    @Override
+    void draw() {
+        super.draw();
+        luna.draw();
     }
 }
 
@@ -142,7 +163,7 @@ class Luna extends Planeta {
     
     public static final String textura = "resources/luna.jpg";
 
-    Luna(int x, int y, int diametro, int velocidad){
-        super(textura, x, y, diametro, velocidad);
+    Luna(int x, int y, int diametro, int velocidad, int angulo){
+        super(textura, x, y, diametro, velocidad, angulo);
     }
 }

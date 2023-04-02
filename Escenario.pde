@@ -1,14 +1,12 @@
 Starfield starfield;
 Tierra tierra;
-Luna luna;
 
 
 void setup() {
   size(1920, 1080);
   frameRate(60);
   starfield = new Starfield();
-  tierra = new Tierra(20, 20, 300, 1);  
-  luna = new Luna(500, 20, 300, 1);  
+  tierra = new Tierra(50, 100, 300, 3, 23);  
 }
 
 void draw() {
@@ -20,5 +18,4 @@ void draw() {
 
   // Dibujar la esfera de la Tierra giratoria
   tierra.draw();
-  luna.draw();
 }
