@@ -80,10 +80,52 @@ class Tierra {
 
         mascara.updatePixels();
 
+        // Aplicar la distorsión para simular 3D
+        PImage tmp = distorsionar(tierra);
+
         // Aplicar la máscara a la textura de la Tierra
-        tierra.mask(mascara);
+        tmp.mask(mascara);
 
         // Dibujar la textura de la Tierra en la ventana principal
-        image(tierra, x, y, width, height);
+        image(tmp, x, y, width, height);
+    }
+
+    private PImage distorsionar(PGraphics img) {
+
+        int cx = x+width/2; // Coordenada x del centro de la zona de distorsión
+        int cy = y+height/2; // Coordenada y del centro de la zona de distorsión
+        int radio = max(height, width)/20 * 11; // Radio de la zona de distorsión (cogemos 11/20 partes para que el radio sobresalga un poco de la máscara)
+        float distorsion = 0.65; // Factor de distorsión de ojo de pez (<1 aumenta y >1 reduce)
+
+        // Crear una imagen temporal para almacenar la imagen distorsionada
+        PImage temp = createImage(width, height, RGB);
+
+        // Iterar por cada píxel de la imagen
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                // Calcular la distancia del píxel al centro de la zona de distorsión
+                float dx = x - cx;
+                float dy = y - cy;
+                float dist = sqrt(dx*dx + dy*dy);
+                
+                // Si el píxel está dentro de la zona de distorsión
+                if (dist <= radio) {
+                    // Aplicar la transformación de mapeo radial
+                    float amount = map(dist, 0, radio, distorsion, 1);
+                    float nx = cx + dx * amount;
+                    float ny = cy + dy * amount;
+                    
+                    // Copiar el píxel distorsionado a la imagen temporal
+                    int c = img.get((int)nx, (int)ny);
+                    temp.set(x, y, c);
+                } else {
+                    // Copiar el píxel sin distorsión a la imagen temporal
+                    int c = img.get(x, y);
+                    temp.set(x, y, c);
+                }
+            }
+        }
+
+        return temp;
     }
 }
