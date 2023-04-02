@@ -138,3 +138,12 @@ class Tierra extends Planeta {
         super(textura, x, y, height, width, velocidad);
     }
 }
+
+class Luna extends Planeta {
+    
+    public static final String textura = "resources/luna.jpg";
+
+    Luna(int x, int y, int height, int width, int velocidad){
+        super(textura, x, y, height, width, velocidad);
+    }
+}
