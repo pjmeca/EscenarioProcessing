@@ -107,8 +107,9 @@ class Nave {
         }
 
         // Si el centro sigue fuera, le damos un empujón
-        if((x+imagen.width/2 >= width || x <= -imagen.width/2) && (y+imagen.height/2 >= height || y <= -imagen.height/2)) {
-            velocidadMultiplicador += 1;
+        if((x+imagen.width/2 > width || x < -imagen.width/2) || (y+imagen.height/2 > height || y < -imagen.height/2)) {
+            velocidadMultiplicador = 1.5;
+            angulo += 1; // movemos un poco el ángulo para que no quede atrapado en un eje
         }
 
         // Multiplicar la velocidad si la nave se mueve fuera de la pantalla
