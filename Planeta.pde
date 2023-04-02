@@ -1,20 +1,20 @@
-class Tierra {
+abstract class Planeta {
     
-    PImage textura; // Imagen de la textura de la Tierra
+    PImage textura; // Imagen de la textura del planeta
     int x, y;
     int height, width;
     int velocidad;
     
-    // Como la Tierra rota muy rápido incluso a 1 de velocidad,
+    // Como rota muy rápido incluso a 1 de velocidad,
     // reduciremos la cantidad de veces que se ejecuta la rotación (equivale a saltar frames)
     private static final int DEFAULT_SPEEDCOUNTER = 2;
     private int speedCounter = DEFAULT_SPEEDCOUNTER;
 
-    private PGraphics tierra;
+    private PGraphics planeta;
 
-    Tierra(String texturaURL, int x, int y, int height, int width, int velocidad) {
+    Planeta(String texturaURL, int x, int y, int height, int width, int velocidad) {
         textura = loadImage(texturaURL);
-        // imageMode(CENTER); // coloca el punto x, y en el centro de la Tierra
+        // imageMode(CENTER); // coloca el punto x, y en el centro del planeta
 
         this.x = x;
         this.y = y;
@@ -32,7 +32,7 @@ class Tierra {
         dibujar();        
     }
 
-    // Realiza un movimiento de rotación sobre la Tierra 
+    // Realiza un movimiento de rotación sobre el planeta 
     private void rotacion() {
         // Desplazar el rectángulo de la textura en el eje X
         textura.loadPixels();
@@ -48,19 +48,19 @@ class Tierra {
         textura.updatePixels();
     }
 
-    // Dibuja la Tierra
+    // Dibuja el planeta
     private void dibujar() {
-        // Primero dibujamos un fondo negro para que no se vean las estrellas detrás al difuminar la Tierra
+        // Primero dibujamos un fondo negro para que no se vean las estrellas detrás al difuminar el planeta
         fill(0);
         ellipse(x+width/2, y+height/2, width, height);
 
-        // Crear un objeto PGraphics para la textura de la Tierra
-        tierra = createGraphics(width, height);
-        tierra.beginDraw();
-        tierra.image(textura, 0, 0, textura.width * height/textura.height, height);
-        tierra.endDraw();
+        // Crear un objeto PGraphics para la textura del planeta
+        planeta = createGraphics(width, height);
+        planeta.beginDraw();
+        planeta.image(textura, 0, 0, textura.width * height/textura.height, height);
+        planeta.endDraw();
 
-        // Dibujar una elipse como máscara para la textura de la Tierra
+        // Dibujar una elipse como máscara para la textura del planeta
         PGraphics mascara = createGraphics(width, height);
         mascara.beginDraw();
         mascara.endDraw();
@@ -81,12 +81,12 @@ class Tierra {
         mascara.updatePixels();
 
         // Aplicar la distorsión para simular 3D
-        PImage tmp = distorsionar(tierra);
+        PImage tmp = distorsionar(planeta);
 
-        // Aplicar la máscara a la textura de la Tierra
+        // Aplicar la máscara a la textura de la planeta
         tmp.mask(mascara);
 
-        // Dibujar la textura de la Tierra en la ventana principal
+        // Dibujar la textura de la planeta en la ventana principal
         image(tmp, x, y, width, height);
     }
 
@@ -127,5 +127,14 @@ class Tierra {
         }
 
         return temp;
+    }
+}
+
+class Tierra extends Planeta {
+    
+    public static final String textura = "resources/tierra.jpg";
+
+    Tierra(int x, int y, int height, int width, int velocidad){
+        super(textura, x, y, height, width, velocidad);
     }
 }
