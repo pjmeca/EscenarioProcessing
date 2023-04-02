@@ -91,9 +91,9 @@ abstract class Planeta {
 
     private PImage distorsionar(PGraphics img) {
 
-        int cx = x+diametro/2; // Coordenada x del centro de la zona de distorsión
-        int cy = y+diametro/2; // Coordenada y del centro de la zona de distorsión
-        int radio = max(diametro, diametro)/20 * 11; // Radio de la zona de distorsión (cogemos 11/20 partes para que el radio sobresalga un poco de la máscara)
+        int cx = diametro/2; // Coordenada x del centro de la zona de distorsión
+        int cy = diametro/2; // Coordenada y del centro de la zona de distorsión
+        int radio = (diametro*11)/20; // Radio de la zona de distorsión (cogemos 11/20 partes para que el radio sobresalga un poco de la máscara)
         float distorsion = 0.65; // Factor de distorsión de ojo de pez (<1 aumenta y >1 reduce)
 
         // Crear una imagen temporal para almacenar la imagen distorsionada
