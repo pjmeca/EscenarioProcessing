@@ -23,4 +23,6 @@ void draw() {
 
   // Nave interactiva
   nave.draw();
+
+  println("FPS: " + frameRate);
 }
