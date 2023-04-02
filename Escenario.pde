@@ -1,5 +1,6 @@
 Starfield starfield;
 Tierra tierra;
+Nave nave;
 
 
 void setup() {
@@ -7,6 +8,7 @@ void setup() {
   frameRate(60);
   starfield = new Starfield();
   tierra = new Tierra(50, 100, 300, 3, 23);  
+  nave = new Nave(20, 20, 25);
 }
 
 void draw() {
@@ -18,4 +20,7 @@ void draw() {
 
   // Dibujar la esfera de la Tierra giratoria
   tierra.draw();
+
+  // Nave interactiva
+  nave.draw();
 }
