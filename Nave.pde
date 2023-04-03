@@ -12,6 +12,8 @@ class Nave {
     float tamaño;
     int incrementoAngulo = random(-1, 1) < 0 ? -1 : 1;
 
+    SistemaParticulas particulas;
+
     Nave(int x, int y, int tamañoPorcentaje) {
         imagen = loadImage(imagenURL);
 
@@ -28,6 +30,8 @@ class Nave {
         angulo = random(-360, 360);
 
         impulsada = false;
+
+        particulas = new SistemaParticulas(8, 20, 500);
     }
 
     void draw() {       
@@ -72,6 +76,7 @@ class Nave {
         pushMatrix();
         translate(x + imagen.width/2, y + imagen.height/2);
         rotate(radians(angulo));
+        particulas.draw(triggerRaton(), -imagen.height/2, 0, radians(180)); // fuego al encender el motor
         image(imagen, -imagen.width/2, -imagen.height/2);
         popMatrix();
     }

@@ -2,7 +2,6 @@ Starfield starfield;
 Tierra tierra;
 Nave nave;
 
-
 void setup() {
   size(1920, 1080);
   frameRate(60);
