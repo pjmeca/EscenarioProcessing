@@ -70,7 +70,7 @@ class Nave {
         x += velocidadX;
         y += velocidadY;
 
-        wrapEdges();
+        checkSalirPantalla();
 
         // Actualizar la posición
         pushMatrix();
@@ -91,7 +91,7 @@ class Nave {
         }        
     }
 
-    void wrapEdges() {
+    void checkSalirPantalla() {
         float velocidadMultiplicador = 1.0;
 
         // Si se sale, la movemos al otro extremo
