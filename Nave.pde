@@ -36,7 +36,7 @@ class Nave {
 
     void draw() {       
         // Movimiento
-        if(triggerRaton()){
+        if(triggerRaton(x, y, imagen.width, imagen.height, this)){
             impulsada = true;
             aceleracion += DEFAULT_ACELERACION;
         }            
@@ -76,19 +76,9 @@ class Nave {
         pushMatrix();
         translate(x + imagen.width/2, y + imagen.height/2);
         rotate(radians(angulo));
-        particulas.draw(triggerRaton(), -imagen.height/2, 0, radians(180)); // fuego al encender el motor
+        particulas.draw(triggerRaton(x, y, imagen.width, imagen.height, this), -imagen.height/2, 0, radians(180)); // fuego al encender el motor
         image(imagen, -imagen.width/2, -imagen.height/2);
         popMatrix();
-    }
-
-    boolean triggerRaton() {
-        if (mouseX >= x && mouseX <= x + imagen.width && mouseY >= y && mouseY <= y + imagen.height) {
-            cursor(HAND);
-            return mousePressed;
-        } else {
-            cursor(ARROW);
-            return false;
-        }        
     }
 
     void checkSalirPantalla() {
