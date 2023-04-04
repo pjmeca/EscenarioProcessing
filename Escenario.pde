@@ -44,8 +44,15 @@ boolean triggerRaton(int x, int y, int ancho, int alto, Object objeto) {
   } else {
       if(objeto == objetoActivo) {
         cursor(ARROW);
-        objeto = null;
+        objetoActivo = null;
       }        
       return false;
   }        
+}
+// Deshabilita el trigger del ratón si el objeto es el que lo activó
+void disableTriggerRaton(Object objeto) {
+  if(objeto == objetoActivo) {
+    cursor(ARROW);
+    objetoActivo = null;
+  }
 }
