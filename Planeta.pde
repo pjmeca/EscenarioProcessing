@@ -142,28 +142,68 @@ abstract class Planeta {
 
 class Tierra extends Planeta {
     
-    public static final String textura = "resources/tierra.png";
+    public static final String texturaURL = "resources/tierra.png";
 
     private Luna luna;
+    private Bala bala;
+
+    private int[] posLuna;
 
     Tierra(int x, int y, int diametro, int velocidad, int angulo){
-        super(textura, x, y, diametro, velocidad, angulo);
+        super(texturaURL, x, y, diametro, velocidad, angulo);
 
-        luna = new Luna(x+444, y+100, int(diametro*0.27), 1, angulo);  
+        posLuna = new int[] {x+444, y+100};
+
+        luna = new Luna(posLuna[0], posLuna[1], int(diametro*0.27), 1, angulo);     
     }
 
     @Override
     void draw() {
         super.draw();
+
+        // Si se hace click, comienza la animación
+        if(!luna.isColision() && bala == null && triggerRaton(x, y, diametro, diametro, this)) {
+            bala = new Bala(x+130, y+80, 50); // la suma es para que aparezca por el centro de la Tierra
+            bala.nuevaAnimacion(posLuna[0]+20, posLuna[1]+30, 0.8);
+            disableTriggerRaton(this);
+        }
+
+        // Cuando termine, avisa a la luna
+        if(bala != null && bala.isAnimacionTerminada()) {
+            luna.colision();
+            bala = null;
+        }
+
         luna.draw();
+        if(bala != null)
+            bala.draw();        
     }
 }
 
 class Luna extends Planeta {
     
-    public static final String textura = "resources/luna.jpg";
+    public static final String texturaURL = "resources/luna/luna.jpg";
+    public static final String texturaMeliesURL = "resources/luna/luna_melies.png";
+    private boolean texturaCambiada = false;
 
     Luna(int x, int y, int diametro, int velocidad, int angulo){
-        super(textura, x, y, diametro, velocidad, angulo);
+        super(texturaURL, x, y, diametro, velocidad, angulo);
+    }
+
+    @Override
+    void draw() {        
+        if(!texturaCambiada)
+            super.draw();        
+        else
+           super.dibujar(); // se salta la rotación
+    }
+
+    void colision() {
+        textura = loadImage(texturaMeliesURL);
+        texturaCambiada = true;
+    }
+
+    boolean isColision() {
+        return texturaCambiada;
     }
 }
