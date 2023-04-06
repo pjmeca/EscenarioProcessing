@@ -24,7 +24,22 @@ class SistemaParticulas {
             for(int i=0; i<min(numParticulas, MAX_PARTICULAS-particulas.size()); i++)
                 addParticula(x, y, angulo);
 
-        // Actualizamos las partículas existentes       
+        // Actualizamos las partículas existentes  
+        actualizarParticulas();
+    }
+
+    void draw(boolean crear, float x, float y) {
+        // Crear nuevas partículas
+        if(crear)
+            for(int i=0; i<min(numParticulas, MAX_PARTICULAS-particulas.size()); i++)
+                addParticula(x, y, random(radians(360)));
+
+        // Actualizamos las partículas existentes  
+        actualizarParticulas();
+    }
+
+    void actualizarParticulas() {
+             
         for (int i = particulas.size()-1; i >= 0; i--) {
             Particula p = particulas.get(i);
             p.update();
