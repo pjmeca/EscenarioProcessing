@@ -1,7 +1,7 @@
 abstract class Planeta {
     
     PImage textura; // Imagen de la textura del planeta
-    int x, y;
+    PVector posicion;
     int diametro;
     int velocidad;
     int anguloRotacion = 0;
@@ -13,12 +13,11 @@ abstract class Planeta {
 
     private PGraphics planeta;
 
-    Planeta(String texturaURL, int x, int y, int diametro, int velocidad, int angulo) {
+    Planeta(String texturaURL, PVector posicion, int diametro, int velocidad, int angulo) {
         textura = loadImage(texturaURL);
         // imageMode(CENTER); // coloca el punto x, y en el centro del planeta
 
-        this.x = x;
-        this.y = y;
+        this.posicion = posicion;
         this.diametro = diametro;
         this.velocidad = velocidad;
         this.anguloRotacion = angulo;
@@ -54,13 +53,13 @@ abstract class Planeta {
         pushMatrix();
 
         // Aplicamos la rotación
-        translate(x + diametro/2, y + diametro/2);
+        translate(posicion.x + diametro/2, posicion.y + diametro/2);
         rotate(radians(anguloRotacion));
-        translate(-(x + diametro/2), -(y + diametro/2));
+        translate(-(posicion.x + diametro/2), -(posicion.y + diametro/2));
 
         // Primero dibujamos un fondo negro para que no se vean las estrellas detrás al difuminar el planeta
         fill(0);
-        ellipse(x+diametro/2, y+diametro/2, diametro, diametro);
+        ellipse(posicion.x+diametro/2, posicion.y+diametro/2, diametro, diametro);
 
         // Crear un objeto PGraphics para la textura del planeta
         planeta = createGraphics(diametro, diametro);
@@ -95,7 +94,7 @@ abstract class Planeta {
         tmp.mask(mascara);
 
         // Dibujar la textura del planeta en la ventana principal
-        image(tmp, x, y, diametro, diametro);
+        image(tmp, posicion.x, posicion.y, diametro, diametro);
 
         popMatrix();
     }
@@ -147,14 +146,14 @@ class Tierra extends Planeta {
     private Luna luna;
     private Bala bala;
 
-    private int[] posLuna;
+    private PVector posLuna;
 
-    Tierra(int x, int y, int diametro, int velocidad, int angulo){
-        super(texturaURL, x, y, diametro, velocidad, angulo);
+    Tierra(PVector posicion, int diametro, int velocidad, int angulo){
+        super(texturaURL, posicion, diametro, velocidad, angulo);
 
-        posLuna = new int[] {x+444, y+100};
+        posLuna = new PVector(posicion.x+444, posicion.y+100);
 
-        luna = new Luna(posLuna[0], posLuna[1], int(diametro*0.27), 1, angulo);     
+        luna = new Luna(posLuna, int(diametro*0.27), 1, angulo);     
     }
 
     @Override
@@ -162,9 +161,9 @@ class Tierra extends Planeta {
         super.draw();
 
         // Si se hace click, comienza la animación
-        if(!luna.isColision() && bala == null && triggerRaton(x, y, diametro, diametro, this)) {
-            bala = new Bala(x+130, y+80, 50); // la suma es para que aparezca por el centro de la Tierra
-            bala.nuevaAnimacion(posLuna[0]+20, posLuna[1]+30, 0.8);
+        if(!luna.isColision() && bala == null && triggerRaton(posicion, diametro, diametro, this)) {
+            bala = new Bala(new PVector(posicion.x+130, posicion.y+80), 50); // la suma es para que aparezca por el centro de la Tierra
+            bala.nuevaAnimacion(new PVector(posLuna.x+20, posLuna.y+30), 0.8);
             disableTriggerRaton(this);
         }
 
@@ -186,8 +185,8 @@ class Luna extends Planeta {
     public static final String texturaMeliesURL = "resources/luna/luna_melies.png";
     private boolean texturaCambiada = false;
 
-    Luna(int x, int y, int diametro, int velocidad, int angulo){
-        super(texturaURL, x, y, diametro, velocidad, angulo);
+    Luna(PVector posicion, int diametro, int velocidad, int angulo){
+        super(texturaURL, posicion, diametro, velocidad, angulo);
     }
 
     @Override

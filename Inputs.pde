@@ -1,6 +1,9 @@
 // Comprueba si el ratón se encuentra dentro del rango y es clicado
 Object objetoActivo = null; // el objeto que activó el trigger
-boolean triggerRaton(int x, int y, int ancho, int alto, Object objeto) {
+boolean triggerRaton(PVector posicion, int ancho, int alto, Object objeto) {
+  int x = (int) posicion.x;
+  int y = (int) posicion.y;
+
   if (mouseX >= x && mouseX <= x + ancho && mouseY >= y && mouseY <= y + alto) {
       cursor(HAND);
       objetoActivo = objeto;

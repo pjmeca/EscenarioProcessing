@@ -7,8 +7,8 @@ void setup() {
   size(1920, 1080);
   frameRate(60);
   starfield = new Starfield();
-  tierra = new Tierra(50, 100, 300, 3, 23);  
-  nave = new Nave(800, 480, 25);
+  tierra = new Tierra(new PVector(50, 100), 300, 3, 23);  
+  nave = new Nave(new PVector(800, 480), 25);
   ovnis = new ArrayList<Ovni>();
   for(int i=0; i<3; i++) {
     ovnis.add(new Ovni());

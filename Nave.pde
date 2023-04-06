@@ -6,7 +6,7 @@ class Nave {
     public static final float FRICCION = 0.75;
 
     PImage imagen;
-    int x, y;
+    PVector posicion;
     float velocidadX, velocidadY, aceleracion, friccion, angulo;
     boolean impulsada;
     float tamaño;
@@ -14,11 +14,10 @@ class Nave {
 
     SistemaParticulas particulas;
 
-    Nave(int x, int y, int tamañoPorcentaje) {
+    Nave(PVector posicion, int tamañoPorcentaje) {
         imagen = loadImage(imagenURL);
 
-        this.x = x;
-        this.y = y;
+        this.posicion = posicion;
         this.tamaño = tamañoPorcentaje/100.0;
         imagen.resize(int(imagen.width*tamaño), int(imagen.height*tamaño));
 
@@ -36,7 +35,7 @@ class Nave {
 
     void draw() {       
         // Movimiento
-        if(triggerRaton(x, y, imagen.width, imagen.height, this)){
+        if(triggerRaton(posicion, imagen.width, imagen.height, this)){
             impulsada = true;
             aceleracion += DEFAULT_ACELERACION;
         }            
@@ -67,16 +66,16 @@ class Nave {
         }
 
         // Mover la nave
-        x += velocidadX;
-        y += velocidadY;
+        posicion.x += velocidadX;
+        posicion.y += velocidadY;
 
         checkSalirPantalla();
 
         // Actualizar la posición
         pushMatrix();
-        translate(x + imagen.width/2, y + imagen.height/2);
+        translate(posicion.x + imagen.width/2, posicion.y + imagen.height/2);
         rotate(radians(angulo));
-        particulas.draw(triggerRaton(x, y, imagen.width, imagen.height, this), -imagen.height/2, 0, radians(180)); // fuego al encender el motor
+        particulas.draw(triggerRaton(posicion, imagen.width, imagen.height, this), -imagen.height/2, 0, radians(180)); // fuego al encender el motor
         image(imagen, -imagen.width/2, -imagen.height/2);
         popMatrix();
     }
@@ -85,24 +84,24 @@ class Nave {
         float velocidadMultiplicador = 1.0;
 
         // Si se sale, la movemos al otro extremo
-        if (x > width) {
-            x = -imagen.width;
+        if (posicion.x > width) {
+            posicion.x = -imagen.width;
             velocidadMultiplicador = 1.5;
-        } else if (x < -imagen.width) {
-            x = width;
+        } else if (posicion.x < -imagen.width) {
+            posicion.x = width;
             velocidadMultiplicador = 1.5;
         }
 
-        if (y > height) {
-            y = -imagen.height;
+        if (posicion.y > height) {
+            posicion.y = -imagen.height;
             velocidadMultiplicador = 1.5;
-        } else if (y < -imagen.height) {
-            y = height;
+        } else if (posicion.y < -imagen.height) {
+            posicion.y = height;
             velocidadMultiplicador = 1.5;
         }
 
         // Si el centro sigue fuera, le damos un empujón
-        if((x+imagen.width/2 > width || x < -imagen.width/2) || (y+imagen.height/2 > height || y < -imagen.height/2)) {
+        if((posicion.x+imagen.width/2 > width || posicion.x < -imagen.width/2) || (posicion.y+imagen.height/2 > height || posicion.y < -imagen.height/2)) {
             velocidadMultiplicador = 1.5;
             angulo += 1; // movemos un poco el ángulo para que no quede atrapado en un eje
         }

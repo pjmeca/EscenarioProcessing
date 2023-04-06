@@ -1,11 +1,12 @@
 class Bala {
 
-    float x, y, size, sizeInicial;
+    PVector posicion;
+    float size, sizeInicial;
     Animacion a;
 
-    Bala(float x, float y, float size) {
-        this.x = x;
-        this.y = y;
+    Bala(PVector posicion, float size) {
+        this.posicion = posicion;
+        posicion.z = 1;
         this.size = size;
         this.sizeInicial = size;
     }
@@ -15,13 +16,10 @@ class Bala {
         if(a == null || a.isTerminada()) 
             return;
 
-        PVector v = new PVector(x, y, 1);
         if(!a.isTerminada())
-            v = a.update();
+            posicion = a.update();
 
-        x = v.x;
-        y = v.y;
-        size = sizeInicial * v.z;
+        size = sizeInicial * posicion.z;
 
         int r = 100;
         int g = 100;
@@ -31,31 +29,31 @@ class Bala {
         
         fill(color(r, g, b));
 
-        rect(x+size*0.25, y, size*1.25, size); // cuerpo
-        arc(x+size*1.5, y+size/2, size*1.2, size, radians(-90), radians(90)); // punta
-        arc(x+size*0.75, y+size/2, size*0.55, size, radians(-90), radians(90)); // primer arco del cuerpo
-        arc(x+size*1.3, y+size/2, size*0.6, size, radians(-90), radians(90)); // segundo arco del cuerpo
+        rect(posicion.x+size*0.25, posicion.y, size*1.25, size); // cuerpo
+        arc(posicion.x+size*1.5, posicion.y+size/2, size*1.2, size, radians(-90), radians(90)); // punta
+        arc(posicion.x+size*0.75, posicion.y+size/2, size*0.55, size, radians(-90), radians(90)); // primer arco del cuerpo
+        arc(posicion.x+size*1.3, posicion.y+size/2, size*0.6, size, radians(-90), radians(90)); // segundo arco del cuerpo
 
         noFill();
-        bezier(x+size/4, y+size*0.65, x+size, y+size*0.7, x+size*2.1, y+size*0.7, x+size*2.1, y+size/2); // curva atravesando el cuerpo para dar sensación de profundidad
+        bezier(posicion.x+size/4, posicion.y+size*0.65, posicion.x+size, posicion.y+size*0.7, posicion.x+size*2.1, posicion.y+size*0.7, posicion.x+size*2.1, posicion.y+size/2); // curva atravesando el cuerpo para dar sensación de profundidad
         fill(color(r, g, b));
 
         // Puntos de soldadura
         ellipseMode(CENTER);
         for(int i=0; i<size*1.25; i += 10)
-            ellipse(x+size*0.25 + i+10, y+size/16, 1, 1);
+            ellipse(posicion.x+size*0.25 + i+10, posicion.y+size/16, 1, 1);
 
         ellipseMode(CORNER);
-        ellipse(x, y, size/2, size); // parte trasera
+        ellipse(posicion.x, posicion.y, size/2, size); // parte trasera
         ellipseMode(CENTER);
-        ellipse(x+size/4, y+size/2, size/6, size/3); // centro de la parte trasera
+        ellipse(posicion.x+size/4, posicion.y+size/2, size/6, size/3); // centro de la parte trasera
         // Puntos de soldadura del centro de la parte trasera
-        dibujarElipseDiscontinua(x+size/4, y+size/2, size/3, size/1.8, 20);
+        dibujarElipseDiscontinua(new PVector(posicion.x+size/4, posicion.y+size/2), size/3, size/1.8, 20);
     }
 
-    private void dibujarElipseDiscontinua(float x, float y, float w, float h, int numPuntos) {
+    private void dibujarElipseDiscontinua(PVector posicion, float w, float h, int numPuntos) {
         pushMatrix();
-        translate(x, y);
+        translate(posicion.x, posicion.y);
         float angleStep = TWO_PI / numPuntos; // Divide la elipse en numPuntos puntos
         for (float angle = 0; angle < TWO_PI; angle += angleStep) {
             float px = cos(angle) * w / 2;
@@ -65,8 +63,8 @@ class Bala {
         popMatrix();
     }
 
-    public void nuevaAnimacion(int xf, int yf, float velocidad) {
-        a = new Animacion(x, y, xf, yf, velocidad);
+    public void nuevaAnimacion(PVector posicionFinal, float velocidad) {
+        a = new Animacion(new PVector(posicion.x, posicion.y), new PVector(posicionFinal.x, posicionFinal.y), velocidad);
     }
 
     public boolean isAnimacionTerminada() {
@@ -81,9 +79,9 @@ class Animacion {
     float t; // tiempo transcurrido
     float velocidad;
 
-    public Animacion(float x0, float y0, float xf, float yf, float velocidad) {
-        posInicial = new PVector(x0, y0);
-        posFinal = new PVector(xf, yf);
+    public Animacion(PVector posicionInicial, PVector posicionFinal, float velocidad) {
+        posInicial = posicionInicial;
+        posFinal = posicionFinal;
         t = 0;
         this.velocidad = velocidad*0.01;
     }

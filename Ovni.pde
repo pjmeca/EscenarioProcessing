@@ -33,7 +33,7 @@ class Ovni {
     float y = noise(xoff + SIZE, yoff + SIZE) * height;
 
     disableTriggerRaton(this); // Como se mueve, tiene que desactivarlo para que no se quede la colisión en el vacío
-    boolean haMuerto = vivo && triggerRaton(int(x), int(y), SIZE, SIZE, this);
+    boolean haMuerto = vivo && triggerRaton(new PVector(x, y), SIZE, SIZE, this);
     vivo = vivo && !haMuerto;
     particulas.draw(haMuerto, x+SIZE/2, y+SIZE/2);
 
