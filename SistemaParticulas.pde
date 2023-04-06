@@ -18,9 +18,9 @@ class SistemaParticulas {
         particulas.add(p);
     }
 
-    void draw(boolean motorEncendido, float x, float y, float angulo) {
-        // Si el motor está encendido, se crean nuevas partículas
-        if(motorEncendido)
+    void draw(boolean crear, float x, float y, float angulo) {
+        // Crear nuevas partículas
+        if(crear)
             for(int i=0; i<min(numParticulas, MAX_PARTICULAS-particulas.size()); i++)
                 addParticula(x, y, angulo);
 
