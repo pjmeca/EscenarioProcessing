@@ -31,5 +31,15 @@ void draw() {
   // Nave interactiva
   nave.draw();
 
+  FPS();
+}
+
+boolean primeraVez = true;
+void FPS() {
+  if(primeraVez) {
+    primeraVez = false;
+  } else {
+    print("                     \033[F\r");
+  }
   println("FPS: " + frameRate);
 }
