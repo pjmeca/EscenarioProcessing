@@ -6,9 +6,8 @@ abstract class Planeta {
     int velocidad;
     int anguloRotacion = 0;
     
-    // Como rota muy rápido incluso a 1 de velocidad,
-    // reduciremos la cantidad de veces que se ejecuta la rotación (equivale a saltar frames)
-    private static final int DEFAULT_SPEEDCOUNTER = 2;
+    // Si va muy rápido, puede reducirse la cantidad de veces que se ejecuta la rotación (equivale a saltar frames)
+    private static final int DEFAULT_SPEEDCOUNTER = 1;
     private int speedCounter = DEFAULT_SPEEDCOUNTER;
 
     private PGraphics planeta;
@@ -204,5 +203,57 @@ class Luna extends Planeta {
 
     boolean isColision() {
         return texturaCambiada;
+    }
+}
+
+class Marte extends Planeta {
+    
+    public static final String texturaURL = "resources/marte.jpg";
+
+    Marte(PVector posicion, int diametro, int velocidad, int angulo){
+        super(texturaURL, posicion, diametro, velocidad, angulo);
+    }
+}
+
+class Sol extends Planeta {
+    public static final String texturaURL = "resources/sol.jpg";
+
+    PImage desenfoque;
+    int tamDesenfoque = 150;
+
+    Sol(PVector posicion, int diametro, int velocidad){
+        super(texturaURL, posicion, diametro, velocidad, 0);
+
+        // PGraphics pg = createGraphics(150,150);
+        // pg.beginDraw();
+        // pg.background(0,0,0,0);
+        // pg.fill(255);
+        // pg.noStroke();
+        // pg.ellipse(100,100,160,160);
+        // pg.filter(BLUR,5);
+        // pg.endDraw();
+        // desenfoque = pg.get();
+
+        PGraphics pg = createGraphics((int) (tamDesenfoque*2), (int) (tamDesenfoque*2));
+        pg.beginDraw();
+        pg.fill(color(200, 150, 0), 130);
+        pg.ellipse(diametro/2+tamDesenfoque, diametro/2+tamDesenfoque, tamDesenfoque, tamDesenfoque);
+        pg.filter(BLUR,20);
+        pg.endDraw();
+        desenfoque = pg.get();
+    }
+
+    @Override
+    void draw() {
+        super.draw();
+        
+        // push();
+        // filter(BLUR, 10);
+        // tint(255, 100);  // Agregar transparencia a la capa con efecto de desenfoque
+        // ellipse(posicion.x + diametro/2, posicion.y + diametro/2, 150, 150);
+        // pop();
+
+        image(desenfoque, posicion.x-tamDesenfoque, posicion.y-tamDesenfoque);
+        
     }
 }
