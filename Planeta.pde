@@ -221,6 +221,8 @@ class Sol extends Planeta {
     PImage desenfoque;
     int tamDesenfoque = 150;
 
+    private float escala = 1, objetivoEscalado = 1;
+
     Sol(PVector posicion, int diametro, int velocidad){
         super(texturaURL, posicion, diametro, velocidad, 0);
 
@@ -237,6 +239,24 @@ class Sol extends Planeta {
     void draw() {
         super.draw();
 
-        image(desenfoque, posicion.x-tamDesenfoque, posicion.y-tamDesenfoque);
+        if(triggerRaton(posicion, diametro, diametro, this)) {
+            objetivoEscalado = 1.5;
+            disableTriggerRaton(this);
+        }
+
+        if(escala < objetivoEscalado && objetivoEscalado == 1)
+            escala = 1; // debido a imprecisiones de los float, es necesaria esta condición
+        if(escala < objetivoEscalado)
+            escala += 0.08;
+        else if(escala > objetivoEscalado){
+            escala -= 0.1;
+            objetivoEscalado = 1.0;
+        }
+        
+print(escala + " " + objetivoEscalado);
+        pushMatrix();
+        scale(escala);
+        image(desenfoque, posicion.x/escala-tamDesenfoque-(escala-1)*diametro/4, posicion.y/escala-tamDesenfoque-(escala-1)*diametro/4);
+        popMatrix();
     }
 }
