@@ -1,3 +1,5 @@
+/* RATÓN */
+
 // Comprueba si el ratón se encuentra dentro del rango y es clicado
 Object objetoActivo = null; // el objeto que activó el trigger
 boolean triggerRaton(PVector posicion, int ancho, int alto, Object objeto) {
@@ -23,4 +25,14 @@ void disableTriggerRaton(Object objeto) {
     cursor(ARROW);
     objetoActivo = null;
   }
+}
+
+
+/* TECLADO */
+
+boolean prevKeyPressed = false;
+boolean triggerTecla(char tecla) {
+  boolean isTriggered = keyPressed && key == tecla && !prevKeyPressed;
+  prevKeyPressed = keyPressed;
+  return isTriggered;
 }
