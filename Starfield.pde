@@ -1,6 +1,7 @@
 class Starfield {
 
   ArrayList<Estrella> estrellas = new ArrayList<>();
+  ArrayList<EstrellaFugaz> estrellasFugaces = new ArrayList<>();
 
   int numEstrellas = 500;  
 
@@ -21,6 +22,15 @@ class Starfield {
       noStroke();
       ellipse(e.x, e.y, e.tamaño, e.tamaño);
     }
+    dibujarEstrellasFugaces();
+  }
+
+  void dibujarEstrellasFugaces() {
+    if(triggerTecla(' '))
+      estrellasFugaces.add(new EstrellaFugaz());
+    for(EstrellaFugaz e : estrellasFugaces) {
+      e.draw();
+    }
   }
 }
 
@@ -33,16 +43,27 @@ class Estrella {
   private float vidaInicial;
   private float vidaPorcentaje;
 
+  private boolean omitirTransicionInicial = false;
+
   Estrella() {
     init();
   }
 
-  private void init() {
-    this.tamaño = random(1, 3);
-    this.x = random(width);
-    this.y = random(height);
-    vidaActual = vidaInicial = random(200, 1000);
+  Estrella(PVector posicion, float tamaño, float vida, boolean omitirTransicionInicial) {
+    init(posicion, tamaño, vida, omitirTransicionInicial);
+  }
+
+  private void init(PVector posicion, float tamaño, float vida, boolean omitirTransicionInicial) {
+    this.x = posicion.x;
+    this.y = posicion.y;
+    this.tamaño = tamaño;
+    vidaActual = vidaInicial = vida;
     vidaPorcentaje = 0.0;
+    this.omitirTransicionInicial = omitirTransicionInicial;
+  }
+
+  private void init() {
+    init(new PVector(random(width), random(height)), random(1, 3), random(200, 1000), false);
   }
 
   void setPorcentajeVida(float porcentaje) {
@@ -52,7 +73,7 @@ class Estrella {
   float vida() {
 
     // Si acaba de nacer, primero tiene que aparecer en difuminado
-    if(vidaActual == vidaInicial && vidaPorcentaje < 100) {
+    if(!omitirTransicionInicial && vidaActual == vidaInicial && vidaPorcentaje < 100) {
       return vidaPorcentaje++ * 2.55;
     }
 
@@ -66,5 +87,48 @@ class Estrella {
     }
 
     return vidaPorcentaje * 2.55;
+  }
+}
+
+class EstrellaFugaz {
+
+  PVector posicion;
+  int duracion, duracionInicial;
+  ArrayList<Estrella> estela;
+  int tamaño;
+
+  EstrellaFugaz(PVector posicion, int duracion) {
+    init(posicion, duracion);
+  }
+
+  EstrellaFugaz() {
+    int duracion = (int) random(80, 200);
+    init(new PVector(random(duracion, width), random(0, height-duracion)), duracion);
+  }
+
+  private void init(PVector posicion, int duracion) {
+    this.posicion = posicion;
+    this.duracion = this.duracionInicial = duracion;
+    estela = new ArrayList<Estrella>();
+    tamaño = 3;
+  }
+
+  void draw() {
+    if(duracion >= 0)
+      estela.add(new Estrella(posicion, tamaño, duracionInicial, true));
+    for(int i=estela.size()-1; i >= 0; i--){
+      Estrella e = estela.get(i);
+      float colorEstrella = e.vida();
+      fill(colorEstrella);
+      noStroke();
+      ellipse(e.x, e.y, e.tamaño, e.tamaño);
+
+      // Si ha muerto, la eliminamos para que no se recoloque
+      if(colorEstrella == 0)
+        estela.remove(e);
+    }
+    posicion.x -= 1;
+    posicion.y += 1;
+    duracion = duracion < 0 ? -1 : --duracion;
   }
 }
