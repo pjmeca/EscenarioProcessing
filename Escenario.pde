@@ -2,6 +2,7 @@ Starfield starfield;
 Tierra tierra;
 Nave nave;
 ArrayList<Ovni> ovnis;
+Asteroides asteroidesBack, asteroidesFront;
 
 void setup() {
   size(1920, 1080);
@@ -13,6 +14,8 @@ void setup() {
   for(int i=0; i<3; i++) {
     ovnis.add(new Ovni());
   }
+  asteroidesBack = new Asteroides(20, 30);
+  asteroidesFront = new Asteroides(10, 80);
 }
 
 void draw() {
@@ -22,6 +25,8 @@ void draw() {
   // Dibujar estrellas aleatorias en el fondo
   starfield.draw();
 
+  asteroidesBack.draw();
+
   // Dibujar la esfera de la Tierra giratoria
   tierra.draw();
 
@@ -30,6 +35,8 @@ void draw() {
 
   // Nave interactiva
   nave.draw();
+
+  asteroidesFront.draw();  
 
   FPS();
 }
