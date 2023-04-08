@@ -1,4 +1,4 @@
-Starfield starfield;
+Estrellas estrellas;
 Tierra tierra;
 Marte marte;
 Sol sol;
@@ -7,56 +7,65 @@ ArrayList<Ovni> ovnis;
 Asteroides asteroidesBack, asteroidesMid, asteroidesFront;
 
 void setup() {
-  size(1920, 1080);
-  frameRate(60);
-  starfield = new Starfield();
-  tierra = new Tierra(new PVector(50, 100), 300, 3, 23);  
-  marte = new Marte(new PVector(1200, 800), 150, 2, 25);
-  sol = new Sol(new PVector(1500, 200), 100, 1);
-  nave = new Nave(new PVector(800, 480), 25);
-  ovnis = new ArrayList<Ovni>();
-  for(int i=0; i<3; i++) {
-    ovnis.add(new Ovni());
-  }
-  asteroidesBack = new Asteroides(20, 20);
-  asteroidesMid = new Asteroides(8, 80);
-  asteroidesFront = new Asteroides(2, 100);
+    size(1920, 1080);
+    frameRate(30);
+
+    estrellas = new Estrellas();
+    tierra = new Tierra(new PVector(50, 100), 300, 3, 23);  
+    marte = new Marte(new PVector(1200, 800), 150, 2, 25);
+    sol = new Sol(new PVector(1500, 200), 100, 1);
+    nave = new Nave(new PVector(800, 480), 25);
+
+    ovnis = new ArrayList<Ovni>();
+    for(int i=0; i<3; i++) {
+        ovnis.add(new Ovni());
+    }
+
+    asteroidesBack = new Asteroides(20, 20);
+    asteroidesMid = new Asteroides(8, 80);
+    asteroidesFront = new Asteroides(2, 100);
 }
 
 void draw() {
-  // Establecer un fondo negro para el cielo
-  background(0);
+    // Establecer un fondo negro para el cielo
+    background(0);
 
-  // Dibujar estrellas aleatorias en el fondo
-  starfield.draw();
+    // Dibujar estrellas en el fondo
+    estrellas.draw();
 
-  sol.draw();
+    // El sol es el que está más lejos
+    sol.draw();
 
-  asteroidesBack.draw();
+    // Primera capa de asteroides
+    asteroidesBack.draw();
 
-  // Dibujar los planetas
-  tierra.draw();
-  marte.draw();
+    // Dibujar los planetas
+    tierra.draw();
+    marte.draw();
 
-  asteroidesMid.draw();  
+    // Segunda capa de asteroides
+    asteroidesMid.draw();  
 
-  for(Ovni o : ovnis)
-    o.draw();
+    // Ovnis
+    for(Ovni o : ovnis)
+        o.draw();
 
-  // Nave interactiva
-  nave.draw();
+    // Nave interactiva
+    nave.draw();
 
-  asteroidesFront.draw();  
+    // Última capa de asteroides
+    asteroidesFront.draw();  
 
-  FPS();
+    // Imprime en la terminal el número de FPS
+    FPS();
 }
 
 boolean primeraVez = true;
 void FPS() {
-  if(primeraVez) {
-    primeraVez = false;
-  } else {
-    print("                     \033[F\r");
-  }
-  println("FPS: " + frameRate);
+    if(primeraVez) {
+        primeraVez = false;
+    } else {
+        print("                     \033[F\r");
+    }
+    println("FPS: " + frameRate);
 }
