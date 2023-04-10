@@ -2,7 +2,7 @@
     ------------------------------------------------------------------------------------------------ 
     Este archivo contiene las clases relacionadas con los asteroides:
     - Asteroides: representa al conjunto de asteroides dibujados en pantalla, su función es la de
-    recorrer todos los asteroides y actualizar sus posiciones.
+    recorrer todos los asteroides y actualizar sus posiciones siguiendo un movimiento sinusoidal.
     - Asteroide: representa a un asteroide, se caracteriza por una posición, velocidad de
     desplazamiento, tamaño y un ángulo de rotación que aumenta conforme se desplaza para simular una
     rotación.
