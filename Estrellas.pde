@@ -1,3 +1,14 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene las clases relacionadas con las estrellas del espacio:
+    - Estrellas: es la clase principal que controla a las otras dos.
+    - Estrella: representa una estrella normal del fondo, tiene una vida que va disminuyendo con
+    cada frame hasta morir y reaparecer en otro punto de la pantalla.
+    - EstrellaFugaz: esta estrella aparece cuando el usuario pulsa la barra espaciadora y se dibuja
+    en el fondo dejando una estela tras de sí.
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 class Estrellas {
     
     private ArrayList<Estrella> estrellas = new ArrayList<>(); // estrellas normales del fondo

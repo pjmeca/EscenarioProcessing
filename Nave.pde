@@ -1,3 +1,16 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene la clase Nave, que representa una nave espacial interactiva. 
+    La nave gira en una dirección aleatoria de manera indefinida hasta que el usuario hace click
+    sobre ella, en ese momento, la nave se impulsa hacia adelante realizando un MRUA que se frena
+    poco a poco hasta volver a quedar inmóvil, volviendo a girar en una dirección aleatoria.
+    Cuando se impulsa, la nave usa un sistema de partículas para simular el fuego de propulsión del
+    motor.
+    La nave también controla las colisiones con los bordes de la pantalla, impulsándose y
+    reapareciendo en el lado opuesto si más de la mitad está fuera.    
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 class Nave {
     static final String imagenURL = "resources/nave.png";
     static final int DEFAULT_ACELERACION = 5;

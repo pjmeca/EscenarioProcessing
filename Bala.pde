@@ -1,3 +1,17 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene las clases relacionadas con la animación disparada al hacer click en el
+    planeta Tierra.
+    - Bala: representa a una bala dibujada con Processing, se caracteriza por una posición y un
+    tamaño. Llama al objeto Animacion para actualizar su posición y tamaño conforme a una parábola.
+    - Animacion: representa a una animación parabólica desde una posicion inicial hasta una posición
+    final a una determinada velocidad. Con cada llamada a update(), la animación recupera el punto
+    siguiente en la parábola. El punto se obtiene a partir de aumentar el ángulo producido entre la
+    posición inciial y el centro en t * PI radianes, donde t es el tiempo de la animación, que va de
+    0 (posición inicial) a 1 (posición final).
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 class Bala {
     
     private PVector posicion;
@@ -76,7 +90,7 @@ class Bala {
 class Animacion {
     
     private PVector posInicial, posFinal;
-    private float t; // tiempo transcurrido
+    private float t; // tiempo transcurrido (0 - 1)
     private float velocidad;
     
     Animacion(PVector posicionInicial, PVector posicionFinal, float velocidad) {

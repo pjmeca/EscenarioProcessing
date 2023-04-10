@@ -1,3 +1,10 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene los métodos para la ejecución del escenario. Todos los archivos deben
+    meterse en una directorio "Escenario" para que Processing funcione correctamente.
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 Estrellas estrellas;
 Tierra tierra;
 Marte marte;

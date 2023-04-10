@@ -1,3 +1,16 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene las clases relacionadas con los asteroides:
+    - Asteroides: representa al conjunto de asteroides dibujados en pantalla, su función es la de
+    recorrer todos los asteroides y actualizar sus posiciones.
+    - Asteroide: representa a un asteroide, se caracteriza por una posición, velocidad de
+    desplazamiento, tamaño y un ángulo de rotación que aumenta conforme se desplaza para simular una
+    rotación.
+    - Crater: esta clase representa a un cráter en el asteroide. Los cráteres se dibujan usando
+    elipses de processing en posiciones aleatorias del asteroide.
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 class Asteroides {
     
     private int numAsteroides;

@@ -1,3 +1,21 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene las clases relacionadas con el sistema de partículas.
+    - SistemaParticulas: representa el sistema de partículas, se encarga de crear y actualizar
+    todas las partículas.
+    - Particula: representa a una partícula del sistema de partículas, se caracteriza por tener
+    una posición, velocidad, vida y ángulo, entre otros.
+    
+    El sistema de partículas es usado en dos ocasiones por el escenario. Por un lado, se utiliza como
+    propulsión de la nave cuando el usuario clica sobre ella, en este caso, las partículas se emiten
+    con un ángulo opuesto al que mira la nave, con cierta dispersión (llamada a randomGaussian para
+    que la dispersión sea realista, siendo más probable obtener valores más cercanos al ángulo real).
+    Por otro lado, se utiliza cuando el usuario clica sobre los ovnis para realizar la animación de
+    explosión. En este caso, las partículas son emitidas cada una con un ángulo diferente, de manera
+    que se produce una dispersión circular respecto al centro de emisión del sistema de partículas.    
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 class SistemaParticulas {
     
     static final int MAX_PARTICULAS = 500;

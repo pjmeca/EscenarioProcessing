@@ -1,3 +1,9 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene los métodos para manejar los inputs del programa.
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 /* RATÓN */
 
 // Comprueba si el ratón se encuentra dentro del rango y es clicado

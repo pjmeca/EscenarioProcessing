@@ -1,3 +1,19 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene las clases de la jerarquía de planetas:
+    - Planeta: clase abstracta que representa las propiedades básicas de un objeto planeta. El resto
+    de clases heredan de ella.
+    - Tierra: representa al planeta Tierra, se caracteriza por contener un planeta Luna y una
+    animación que se disparará cuando el usuario pulse sobre ella.
+    - Luna: representa al "planeta" Luna, se caracteriza por cambiar de textura cuando se produce 
+    una colisión como resultado de la animación disparada por la Tierra.
+    - Marte: representa al planeta Marte.
+    - Sol: representa al "planeta" Sol, se caracteriza por dibujar una elipse desenfocada a modo de
+    resplandor. Cuando el usuario pulsa sobre él, se ejecuta una animación que aumenta su brillo
+    durante unos instantes.
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 abstract class Planeta {
     
     protected PImage textura; // Imagen de la textura del planeta

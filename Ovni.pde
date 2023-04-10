@@ -1,3 +1,13 @@
+/*  Escenario espacial SIMU 2023 por Pablo Jesús Meca Martínez.
+    ------------------------------------------------------------------------------------------------ 
+    Este archivo contiene la clase Ovni, que representa a un ovni en el escenario.
+    Un ovni se caracteriza por una posición y una velocidad. Para aportar variedad, existen sprites
+    diferentes de ovnis, al crear un ovni, se escoge un sprite de forma aleatoria. Para simular un
+    movimiento orgánico, los ovnis basan su posición en un ruido Perlin.
+    Cuando se hace clic sobre un ovni, este explotará y desaparecerá del escenario.
+    ------------------------------------------------------------------------------------------------ 
+*/
+
 class Ovni {
 
     static final int SIZE = 100;
