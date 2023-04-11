@@ -14,13 +14,13 @@ ArrayList<Ovni> ovnis;
 Asteroides asteroidesBack, asteroidesMid, asteroidesFront;
 
 void setup() {
-    size(1920, 1080);
+    size(1600, 900);
     frameRate(30);
 
     estrellas = new Estrellas();
     tierra = new Tierra(new PVector(50, 100), 300, 3, 23);  
-    marte = new Marte(new PVector(1200, 800), 150, 2, 25);
-    sol = new Sol(new PVector(1500, 200), 100, 1);
+    marte = new Marte(new PVector(1000, 650), 150, 2, 25);
+    sol = new Sol(new PVector(1300, 200), 100, 1);
     nave = new Nave(new PVector(800, 480), 25);
 
     ovnis = new ArrayList<Ovni>();
