@@ -104,6 +104,9 @@ class Estrella {
 
 class EstrellaFugaz {
     
+    public static final int MIN_DURACION = 80;
+    public static final int MAX_DURACION = 200;
+
     private PVector posicion;
     private int duracion, duracionInicial;
     private ArrayList<Estrella> estela;
@@ -114,7 +117,7 @@ class EstrellaFugaz {
     }
     
     EstrellaFugaz() {
-        int duracion = (int) random(80, 200);
+        int duracion = (int) random(MIN_DURACION, MAX_DURACION);
         init(new PVector(random(duracion, width), random(0, height - duracion)), duracion);
     }
     
