@@ -17,10 +17,7 @@ boolean triggerRaton(PVector posicion, int ancho, int alto, Object objeto) {
         objetoActivo = objeto;
         return mousePressed;
     } else {
-        if(objeto == objetoActivo) {
-            cursor(ARROW);
-            objetoActivo = null;
-        }        
+        disableTriggerRaton(objeto);
         return false;
     }        
 }
